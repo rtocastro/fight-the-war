@@ -1,42 +1,392 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.ftw-site {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 100vh;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #171717 0%,
+      #080808 40%,
+      #020202 75%,
+      #000000 100%
+    );
+}
+
+/* RED GLOW */
+
+.hero-red-glow {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 650px;
+  height: 650px;
+
+  transform: translate(-50%, -50%);
+
+  background: radial-gradient(
+    circle,
+    rgba(176, 0, 0, 0.22) 0%,
+    rgba(100, 0, 0, 0.1) 35%,
+    transparent 70%
+  );
+
+  filter: blur(30px);
+
+  animation: redPulse 6s ease-in-out infinite;
+
+  pointer-events: none;
+}
+
+/* VIGNETTE */
+
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle,
+    transparent 35%,
+    rgba(0, 0, 0, 0.35) 65%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+/* SUBTLE NOISE */
+
+.hero-noise {
+  position: absolute;
+  inset: -50%;
+
+  width: 200%;
+  height: 200%;
+
+  z-index: 3;
+
+  opacity: 0.045;
+
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+
+  animation: noiseMove 0.25s steps(2) infinite;
+
+  pointer-events: none;
+}
+
+/* CONTENT */
+
+.hero-content {
+  position: relative;
+
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: min(900px, 90%);
+
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* LOGO */
+
+.hero-logo-wrapper {
+  width: min(700px, 90vw);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.hero-logo {
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 0 15px rgba(0, 0, 0, 1))
+    drop-shadow(0 0 30px rgba(176, 0, 0, 0.12));
+}
+
+/* TAGLINE */
+
+.hero-tagline {
+  margin: 2rem 0 0;
+
+  font-size: clamp(0.72rem, 1.4vw, 0.95rem);
+  font-weight: 700;
+
+  letter-spacing: 0.35rem;
+
+  color: #a9a9a9;
+}
+
+/* ENTER BUTTON */
+
+.enter-button {
+  position: relative;
+
+  margin-top: 2.5rem;
+  padding: 0.9rem 2.6rem;
+
+  border: 1px solid #5b5b5b;
+
+  background: rgba(5, 5, 5, 0.55);
+
+  color: #eeeeee;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.35rem;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    border-color 200ms ease,
+    color 200ms ease,
+    background 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.enter-button::before {
+  content: '';
+
+  position: absolute;
+
+  inset: 0;
+
+  background: var(--ftw-red);
+
+  transform: translateX(-105%);
+
+  transition: transform 250ms ease;
+
+  z-index: -1;
+}
+
+.enter-button:hover {
+  border-color: var(--ftw-red-bright);
+
+  color: white;
+
+  box-shadow:
+    0 0 12px rgba(224, 0, 0, 0.2),
+    0 0 35px rgba(176, 0, 0, 0.1);
+}
+
+.enter-button:hover::before {
+  transform: translateX(0);
+}
+
+/* SCROLL INDICATOR */
+
+.scroll-indicator {
+  position: absolute;
+
+  bottom: 2rem;
+  left: 50%;
+
+  z-index: 10;
+
+  transform: translateX(-50%);
+
+  width: 1px;
+  height: 45px;
+
+  background: rgba(255, 255, 255, 0.15);
+
+  overflow: hidden;
+}
+
+.scroll-indicator span {
+  display: block;
+
+  width: 100%;
+  height: 15px;
+
+  background: var(--ftw-red-bright);
+
+  animation: scrollLine 1.8s ease-in-out infinite;
+}
+
+/* =========================
+   PLACEHOLDER SECTION
+========================= */
+
+.main-site-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100vh;
+
+  padding: 6rem 2rem;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #050505,
+      #0b0b0b
+    );
+}
+
+.section-eyebrow {
+  margin: 0 0 1rem;
+
+  color: var(--ftw-red-bright);
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  letter-spacing: 0.4rem;
+}
+
+.main-site-placeholder h1 {
+  margin: 0;
+
+  font-size: clamp(2.5rem, 7vw, 6rem);
+
+  line-height: 0.9;
+
+  letter-spacing: -0.05em;
+}
+
+.main-site-placeholder > p:last-child {
+  margin-top: 2rem;
+
+  color: var(--ftw-gray);
+
+  letter-spacing: 0.1rem;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes redPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(0.95);
   }
-  to {
-    transform: rotate(360deg);
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@keyframes noiseMove {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(2%, -3%);
+  }
+
+  50% {
+    transform: translate(-3%, 2%);
+  }
+
+  75% {
+    transform: translate(3%, 4%);
+  }
+
+  100% {
+    transform: translate(-2%, -2%);
   }
 }
 
-.card {
-  padding: 2em;
+@keyframes scrollLine {
+  0% {
+    transform: translateY(-18px);
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(45px);
+    opacity: 0;
+  }
 }
 
-.read-the-docs {
-  color: #888;
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+  .hero-logo-wrapper {
+    width: 92vw;
+  }
+
+  .hero-tagline {
+    margin-top: 1.5rem;
+
+    font-size: 0.66rem;
+
+    letter-spacing: 0.23rem;
+  }
+
+  .enter-button {
+    margin-top: 2rem;
+
+    padding: 0.8rem 2rem;
+  }
+
+  .hero-red-glow {
+    width: 450px;
+    height: 450px;
+  }
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+  }
 }
