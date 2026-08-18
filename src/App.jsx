@@ -3,6 +3,7 @@ import './App.css'
 import Music from './sections/Music'
 import Videos from './sections/Videos'
 import Band from './sections/Band'
+import Shows from './sections/Shows'
 
 function App() {
   const handleEnter = () => {
@@ -223,9 +224,7 @@ function App() {
 
       <Videos />
 
-      <section id="shows" className="placeholder-section">
-        <span>SHOWS</span>
-      </section>
+      <Shows />
 
       <Band />
 
