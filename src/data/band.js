@@ -1,0 +1,1 @@
+import BandHistory from '../components/BandHistory'
