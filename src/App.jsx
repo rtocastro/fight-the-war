@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import './App.css'
 import Music from './sections/Music'
 import Videos from './sections/Videos'
+import Band from './sections/Band'
 
 function App() {
   const handleEnter = () => {
@@ -226,9 +227,7 @@ function App() {
         <span>SHOWS</span>
       </section>
 
-      <section id="band" className="placeholder-section">
-        <span>BAND</span>
-      </section>
+      <Band />
 
       <section id="archive" className="placeholder-section">
         <span>ARCHIVE</span>
