@@ -75,7 +75,7 @@ function App() {
               delay: 1,
             }}
           >
-            THE WAR IS EVERYDAY LIFE.
+            THE WAR IS LIFE.
           </motion.p>
 
           <motion.button
