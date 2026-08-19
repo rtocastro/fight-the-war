@@ -1,16 +1,45 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { releases } from '../data/music'
+
+import {
+  releases,
+  liveSets,
+} from '../data/music'
+
+import AudioPlayer from '../components/music/AudioPlayer'
+import LiveSet from '../components/music/LiveSet'
 
 function Music() {
+  const [currentTrack, setCurrentTrack] =
+    useState(null)
+
+  const [isPlaying, setIsPlaying] =
+    useState(false)
+
+  const handleSelectTrack = (track) => {
+    if (!track.file) return
+
+    if (currentTrack?.id === track.id) {
+      setIsPlaying((current) => !current)
+      return
+    }
+
+    setCurrentTrack(track)
+    setIsPlaying(true)
+  }
+
   return (
     <section id="music" className="music-section">
       <div className="music-header">
-        <p className="section-eyebrow">DISCOGRAPHY</p>
+        <p className="section-eyebrow">
+          DISCOGRAPHY
+        </p>
 
         <h2>MUSIC</h2>
 
         <p className="music-intro">
-          Three releases. Eleven tracks. Different chapters of the same war.
+          Three EPs, live recordings, and recovered
+          material from Fight The War.
         </p>
       </div>
 
@@ -19,8 +48,14 @@ function Music() {
           <motion.article
             key={release.id}
             className="release-card"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: 40,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
             viewport={{
               once: true,
               amount: 0.2,
@@ -31,40 +66,95 @@ function Music() {
             }}
           >
             <div className="release-artwork">
-              <div className="release-artwork-placeholder">
-                <span>FTW</span>
-              </div>
+              <img
+                src={release.artwork}
+                alt={`${release.title} artwork`}
+              />
             </div>
 
             <div className="release-info">
               <div className="release-meta">
                 <span>{release.type}</span>
 
-                {release.year && (
-                  <>
-                    <span className="release-dot">•</span>
-                    <span>{release.year}</span>
-                  </>
-                )}
+                <span className="release-dot">
+                  •
+                </span>
+
+                <span>{release.year}</span>
               </div>
 
               <h3>{release.title}</h3>
 
-              <ol className="track-list">
+              <div className="release-track-list">
                 {release.tracks.map((track) => (
-                  <li key={track}>
-                    <span>{track}</span>
-                  </li>
-                ))}
-              </ol>
+                  <div
+                    key={`${release.id}-${track.trackNumber}-${track.title}`}
+                    className="release-track-row"
+                  >
+                    <span>
+                      {String(
+                        track.trackNumber
+                      ).padStart(2, '0')}
+                    </span>
 
-              <button className="release-button">
-                LISTEN
-              </button>
+                    <strong>
+                      {track.displayTitle ||
+                        track.title}
+                    </strong>
+                  </div>
+                ))}
+              </div>
+
+              <div className="release-production">
+                <span>PRODUCTION</span>
+
+                <p>
+                  {release.production.engineer.join(
+                    ' & '
+                  )}
+                </p>
+
+                <small>
+                  {release.production.studio}
+                </small>
+              </div>
             </div>
           </motion.article>
         ))}
       </div>
+
+      <div className="live-recordings-section">
+        <div className="live-recordings-header">
+          <p className="section-eyebrow">
+            RECOVERED AUDIO
+          </p>
+
+          <h3>LIVE RECORDINGS</h3>
+
+          <p>
+            Original Fight The War live recordings
+            preserved from the archive.
+          </p>
+        </div>
+
+        {liveSets.map((liveSet) => (
+          <LiveSet
+            key={liveSet.id}
+            liveSet={liveSet}
+            currentTrack={currentTrack}
+            isPlaying={isPlaying}
+            onSelectTrack={
+              handleSelectTrack
+            }
+          />
+        ))}
+      </div>
+
+      <AudioPlayer
+        track={currentTrack}
+        isPlaying={isPlaying}
+        onPlayingChange={setIsPlaying}
+      />
     </section>
   )
 }
