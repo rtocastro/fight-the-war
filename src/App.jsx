@@ -4,6 +4,7 @@ import Music from './sections/Music'
 import Videos from './sections/Videos'
 import Band from './sections/Band'
 import Shows from './sections/Shows'
+import Archive from './sections/Archive'
 
 function App() {
   const handleEnter = () => {
@@ -228,9 +229,8 @@ function App() {
 
       <Band />
 
-      <section id="archive" className="placeholder-section">
-        <span>ARCHIVE</span>
-      </section>
+      <Archive />
+
     </main>
   )
 }
